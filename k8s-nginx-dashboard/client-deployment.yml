@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: client
-          image: codesdebugger/service-frontend
+          image: codesdebugger/service-frontend:latest
           ports:
           - containerPort: 80
-          
