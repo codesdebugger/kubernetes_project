@@ -25,3 +25,4 @@ RUN curl -L -o template.zip https://www.free-css.com/assets/files/free-css-templ
 EXPOSE 80
 
 # Start NGINX (default command is already correct in base image)
+
