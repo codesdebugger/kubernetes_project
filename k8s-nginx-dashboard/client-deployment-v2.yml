@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: web
+        version: v2
     spec:
       containers:
         - name: client
