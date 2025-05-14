@@ -1,0 +1,2 @@
+// how to calculate scrap?
+

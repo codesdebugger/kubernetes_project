@@ -1,0 +1,56 @@
+version: "3"
+volumes:
+  db_data_mongodb:
+  db_data: 
+    driver: local
+networks:
+  local-server-network:
+    driver: bridge
+services:
+  # Mongo DB
+  mongodb:
+    image: mongo
+    container_name: mongo-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=
+      - MONGO_INITDB_ROOT_PASSWORD=
+    ports:
+      - 27017:27017
+    volumes:
+      - db_data_mongodb:/data/db
+    networks:
+      - local-server-network
+    restart: always
+  # Nginx Server
+  nginx:
+    depends_on:
+      - dashboard-frontend
+      - dashboard-backend
+    restart: always
+    image: codesdebugger/node-react-nginx
+    ports:
+      # - '${APP_PORT}:80'
+      - '9999:80'
+    container_name: nginx-server
+    networks:
+      - local-server-network
+
+#Dashboard code start here
+  dashboard-frontend:
+    image: codesdebugger/node-react-frontend
+    restart: always
+    networks:
+      - local-server-network
+    container_name: dashboard-frontend
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - dashboard-backend
+  dashboard-backend:
+    image: codesdebugger/node-react-backend
+    restart: always
+    depends_on:
+      - mongodb
+    container_name: dashboard-backend
+    networks: 
+      - local-server-network
